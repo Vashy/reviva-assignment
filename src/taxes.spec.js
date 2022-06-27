@@ -15,9 +15,9 @@ describe('basic sales taxes', () => {
     });
 
     it('should be free on multiple items', () => {
-      const books = new ShopppingBasket([new Book(new Money('12.49')), new Book(new Money('12.49'))]);
+      const basket = new ShopppingBasket([new Book(new Money('12.49')), new Book(new Money('12.49'))]);
 
-      const taxes = books.applyTaxes(new BasicSalesTax());
+      const taxes = basket.applyTaxes(new BasicSalesTax());
 
       expect(taxes).toEqual(new Money('24.98'));
     });

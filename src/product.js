@@ -12,6 +12,7 @@ export class Product {
   }
 
   applyTaxes(taxes) {
-    return taxes.apply(this);
+    const { taxedValue } = taxes.apply(this);
+    return taxedValue;
   }
 }
