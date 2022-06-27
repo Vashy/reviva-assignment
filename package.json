@@ -1,0 +1,27 @@
+{
+  "name": "reviva-assignment",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vashy/reviva-assignment.git"
+  },
+  "author": "Timoty Granziero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Vashy/reviva-assignment/issues"
+  },
+  "homepage": "https://github.com/Vashy/reviva-assignment#readme",
+  "dependencies": {
+    "currency.js": "^2.0.4"
+  },
+  "devDependencies": {
+    "jest": "^28.1.1"
+  }
+}
