@@ -1,4 +1,5 @@
-import { Book, Books } from './book';
+import { Book } from './book';
+import { ShopppingBasket } from "./shopping-basket";
 import { MusicCD } from './cd';
 import { Money } from './money';
 import { BasicSalesTax, ImportDutyTaxes } from './taxes';
@@ -14,7 +15,7 @@ describe('basic sales taxes', () => {
     });
 
     it('should be free on multiple items', () => {
-      const books = new Books([new Book(new Money('12.49')), new Book(new Money('12.49'))]);
+      const books = new ShopppingBasket([new Book(new Money('12.49')), new Book(new Money('12.49'))]);
 
       const taxes = books.applyTaxes(new BasicSalesTax());
 
@@ -60,7 +61,7 @@ describe('import duty taxes', () => {
     });
 
     it('should sum all taxed books (5\%)', () => {
-      const books = new Books([
+      const books = new ShopppingBasket([
         new Book(new Money('11.5'), true),
         new Book(new Money('12.35'), true),
       ]);
@@ -83,7 +84,7 @@ describe('import duty taxes', () => {
     });
 
     it('should sum all books applying import duty taxes only on imported books', () => {
-      const books = new Books([
+      const books = new ShopppingBasket([
         new Book(new Money('12.55'), true),
         new Book(new Money('20.1'), false),
       ]);
