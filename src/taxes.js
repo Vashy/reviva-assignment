@@ -1,34 +1,36 @@
 import { Money } from "./money";
 
-const importDutyTax = new Money('1.05');
-const basicSalesTax = new Money('1.10');
+const importDutyTax = new Money(.05);
+const basicSalesTax = new Money(.10);
 
 export class BasicSalesTax {
   apply(product) {
     if (product.productType === 'music') {
-      return {
-        taxedValue: product.money.multiply(basicSalesTax),
-        appliedTaxes: product.money.multiply(new Money('0.1')),
-      };
+      return calculateTaxes(product, basicSalesTax);
     }
-    return {
-      taxedValue: product.money,
-      appliedTaxes: Money.ZERO,
-    };
+    return freeTaxesFrom(product);
   }
 }
 
 export class ImportDutyTaxes {
   apply(product) {
     if (product.imported) {
-      return { 
-        taxedValue: product.money.multiply(importDutyTax),
-        appliedTaxes: product.money.multiply(new Money('0.05')),
-      };
+      return calculateTaxes(product, importDutyTax);
     }
-    return {
-      taxedValue: product.money,
-      appliedTaxes: Money.ZERO,
-    };
+    return freeTaxesFrom(product);
   }
 }
+
+const freeTaxesFrom = (product) => ({
+  taxedValue: product.money,
+  appliedTaxes: Money.ZERO,
+});
+
+function calculateTaxes(product, taxCharge) {
+  const taxedValue = product.money.add(product.money.multiply(taxCharge));
+  return {
+    taxedValue,
+    appliedTaxes: taxedValue.subtract(product.money),
+  };
+}
+
