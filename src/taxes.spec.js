@@ -9,17 +9,19 @@ describe('basic sales taxes', () => {
     it.each(['1', '2.5', '3'])('should be free, value = %s', (value) => {
       const book = new Book(new Money(value));
 
-      const taxes = book.applyTaxes(new BasicSalesTax());
+      const { taxedValue, appliedTaxes } = book.applyTaxes(new BasicSalesTax());
 
-      expect(taxes).toEqual(new Money(value));
+      expect(taxedValue).toEqual(new Money(value));
+      expect(appliedTaxes).toEqual(Money.ZERO);
     });
 
     it('should be free on multiple items', () => {
       const basket = new ShopppingBasket([new Book(new Money('12.49')), new Book(new Money('12.49'))]);
 
-      const taxes = basket.applyTaxes(new BasicSalesTax());
+      const { taxedValue, appliedTaxes } = basket.applyTaxes(new BasicSalesTax());
 
-      expect(taxes).toEqual(new Money('24.98'));
+      expect(taxedValue).toEqual(new Money('24.98'));
+      expect(appliedTaxes).toEqual(Money.ZERO);
     });
   });
 
@@ -28,20 +30,25 @@ describe('basic sales taxes', () => {
       ['10', '11'],
       ['25', '27.5'],
       ['100', '110'],
+      ['14.99', '16.49'],
     ])('should be 10\%, (value = %s, expected = %s)', (money, expected) => {
       const cd = new MusicCD(new Money(money));
 
-      const taxes = cd.applyTaxes(new BasicSalesTax());
+      const { taxedValue, appliedTaxes } = cd.applyTaxes(new BasicSalesTax());
 
-      expect(taxes).toEqual(new Money(expected));
+      expect(taxedValue).toEqual(new Money(expected));
+      expect(appliedTaxes).toEqual(new Money(expected - money));
     });
 
     it('should sum all taxed music CDs (10\%)', () => {
-      // const books = new MusicCD([new Book(new Money('12.49')), new Book(new Money('12.49'))]);
+      const books = new ShopppingBasket([
+        new MusicCD(new Money('14.99')),
+        new MusicCD(new Money('12.49')),
+      ]);
 
-      // const taxes = books.applyTaxes(new BasicSalesTax());
-
-      // expect(taxes).toEqual(new Money('24.98'));
+      const { taxedValue, appliedTaxes } = books.applyTaxes(new BasicSalesTax());
+      expect(taxedValue).toEqual(new Money(14.99 * 1.1 + 12.49 * 1.1));
+      expect(appliedTaxes).toEqual(new Money(14.99 * 0.1 + 12.49 * 0.1));
     });
   });
 });
@@ -55,9 +62,10 @@ describe('import duty taxes', () => {
     ])('should be 5\% with (value = %s, expected = %s)', (money, expected) => {
       const book = new Book(new Money(money), true);
 
-      const taxed = book.applyTaxes(new ImportDutyTaxes());
+      const { taxedValue, appliedTaxes } = book.applyTaxes(new ImportDutyTaxes());
 
-      expect(taxed).toEqual(new Money(expected));
+      expect(taxedValue).toEqual(new Money(expected));
+      expect(appliedTaxes).toEqual(new Money(expected - money));
     });
 
     it('should sum all taxed books (5\%)', () => {
@@ -66,11 +74,12 @@ describe('import duty taxes', () => {
         new Book(new Money('12.35'), true),
       ]);
 
-      const result = books.applyTaxes(new ImportDutyTaxes());
+      const { taxedValue, appliedTaxes } = books.applyTaxes(new ImportDutyTaxes());
 
       const firstTaxed = new Money('11.5').multiply(new Money('1.05'));
       const secondTaxed = new Money('12.35').multiply(new Money('1.05'));
-      expect(result).toEqual(firstTaxed.add(secondTaxed));
+      expect(taxedValue).toEqual(firstTaxed.add(secondTaxed));
+      expect(appliedTaxes).toEqual(new Money(1.2));
     });
   });
 
@@ -78,9 +87,10 @@ describe('import duty taxes', () => {
     it.each(['10', '10.5', '1', '1.05', '147', '154.35'])('should be free with (value = %s)', (money) => {
       const book = new Book(new Money(money), false);
 
-      const taxed = book.applyTaxes(new ImportDutyTaxes());
+      const { taxedValue, appliedTaxes } = book.applyTaxes(new ImportDutyTaxes());
 
-      expect(taxed).toEqual(new Money(money));
+      expect(taxedValue).toEqual(new Money(money));
+      expect(appliedTaxes).toEqual(Money.ZERO);
     });
 
     it('should sum all books applying import duty taxes only on imported books', () => {
@@ -89,11 +99,12 @@ describe('import duty taxes', () => {
         new Book(new Money('20.1'), false),
       ]);
 
-      const result = books.applyTaxes(new ImportDutyTaxes());
+      const { taxedValue, appliedTaxes } = books.applyTaxes(new ImportDutyTaxes());
 
       const firstTaxed = new Money('12.55').multiply(new Money('1.05'));
       const secondTaxFree = new Money('20.1');
-      expect(result).toEqual(firstTaxed.add(secondTaxFree));
+      expect(taxedValue).toEqual(firstTaxed.add(secondTaxFree));
+      expect(appliedTaxes).toEqual(new Money(12.55 * 0.05));
     });
   });
 });

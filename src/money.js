@@ -1,6 +1,8 @@
 import currency from "currency.js";
 
 export class Money {
+  static ZERO = new Money(0);
+
   constructor(value) {
     this.value = currency(value);
   }

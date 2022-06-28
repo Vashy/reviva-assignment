@@ -10,6 +10,9 @@ export class ShopppingBasket {
   applyTaxes(taxes) {
     return this.productList
       .map(item => item.applyTaxes(taxes))
-      .reduce((acc, current) => acc.add(current));
+      .reduce((acc, current) => ({
+        taxedValue: acc.taxedValue.add(current.taxedValue),
+        appliedTaxes: acc.appliedTaxes.add(current.appliedTaxes),
+      }));
   }
 }
