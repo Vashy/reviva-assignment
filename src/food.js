@@ -1,16 +1,16 @@
 import { Product } from "./product";
 
-export class MusicCD extends Product {
-  productType = 'music';
+export class ChocolateBar extends Product {
+  productType = 'food';
 
   constructor(money, imported = false) {
-    super(money, imported);
+    super(money, imported)
   }
 
   getDetails(taxes) {
     const { taxedValue } = taxes.apply(this);
     return {
-      product: new MusicCD(taxedValue, this.imported),
+      product: new ChocolateBar(taxedValue, this.imported),
       quantity: 1,
     }
   }

@@ -15,4 +15,15 @@ export class ShopppingBasket {
         appliedTaxes: acc.appliedTaxes.add(current.appliedTaxes),
       }));
   }
+
+  getReceiptDetails(taxes) {
+    const { taxedValue, appliedTaxes } = this.applyTaxes(taxes);
+    const products = this.productList.map(product => product.getDetails(taxes));
+
+    return {
+      total: taxedValue,
+      salesTaxes: appliedTaxes,
+      products,
+    }
+  }
 }
