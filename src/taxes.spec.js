@@ -2,7 +2,8 @@ import { Book } from './book';
 import { ShopppingBasket } from "./shopping-basket";
 import { MusicCD } from './cd';
 import { Money } from './money';
-import { BasicSalesTax, ImportDutyTaxes } from './taxes';
+import { BasicSalesTax, ImportDutyTaxes, Taxes } from './taxes';
+import { GenericProduct } from './generic-product';
 
 describe('basic sales taxes', () => {
   describe('on books', () => {
@@ -76,10 +77,10 @@ describe('import duty taxes', () => {
 
       const { taxedValue, appliedTaxes } = books.applyTaxes(new ImportDutyTaxes());
 
-      const firstTaxed = new Money('11.5').multiply(new Money('1.05'));
-      const secondTaxed = new Money('12.35').multiply(new Money('1.05'));
+      const firstTaxed = new Money('12.1');
+      const secondTaxed = new Money('13');
       expect(taxedValue).toEqual(firstTaxed.add(secondTaxed));
-      expect(appliedTaxes).toEqual(new Money(1.2));
+      expect(appliedTaxes).toEqual(new Money(1.25));
     });
   });
 
@@ -101,10 +102,23 @@ describe('import duty taxes', () => {
 
       const { taxedValue, appliedTaxes } = books.applyTaxes(new ImportDutyTaxes());
 
-      const firstTaxed = new Money('12.55').multiply(new Money('1.05'));
+      const firstTaxed = new Money('12.55').multiply(new Money('1.05')).roundTo05();
       const secondTaxFree = new Money('20.1');
       expect(taxedValue).toEqual(firstTaxed.add(secondTaxFree));
-      expect(appliedTaxes).toEqual(new Money(12.55 * 0.05));
+      expect(appliedTaxes).toEqual(firstTaxed.subtract(new Money('12.55')));
+    });
+  });
+});
+
+describe('import duty taxes and basic sales taxes together', () => {
+  describe('on generic product', () => {
+    it('should have both taxes applied and round to .05', () => {
+      const product = new GenericProduct(new Money('47.50'), true);
+
+      const { taxedValue, appliedTaxes } = product.applyTaxes(new Taxes(new BasicSalesTax(), new ImportDutyTaxes()));
+
+      expect(taxedValue).toEqual(new Money('54.65'));
+      expect(appliedTaxes).toEqual(new Money(54.65 - 47.50));
     });
   });
 });

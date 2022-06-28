@@ -2,6 +2,7 @@ import { Money } from "./money";
 
 export class Product {
   productType = 'generic';
+  description = '';
 
   constructor(money, imported = false) {
     if (!(money instanceof Money)) {

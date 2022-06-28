@@ -10,7 +10,8 @@ export class Book extends Product {
   getDetails(taxes) {
     const { taxedValue } = taxes.apply(this);
     return {
-      product: new Book(taxedValue, this.imported),
+      product: this,
+      total: taxedValue,
       quantity: 1,
     }
   }

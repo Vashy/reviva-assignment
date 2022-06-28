@@ -1,10 +1,11 @@
 import { Product } from "./product";
 
-export class MusicCD extends Product {
-  productType = 'music';
+export class GenericProduct extends Product {
+  productType = 'generic';
 
-  constructor(money, imported = false) {
+  constructor(money, imported, description) {
     super(money, imported);
+    this.description = description;
   }
 
   getDetails(taxes) {

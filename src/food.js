@@ -1,6 +1,6 @@
 import { Product } from "./product";
 
-export class ChocolateBar extends Product {
+export class Food extends Product {
   productType = 'food';
 
   constructor(money, imported = false) {
@@ -10,7 +10,8 @@ export class ChocolateBar extends Product {
   getDetails(taxes) {
     const { taxedValue } = taxes.apply(this);
     return {
-      product: new ChocolateBar(taxedValue, this.imported),
+      product: this,
+      total: taxedValue,
       quantity: 1,
     }
   }

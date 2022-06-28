@@ -22,6 +22,7 @@ export class Multiple extends Product {
     const { product } = this.product.getDetails(taxes);
     return {
       product,
+      total: this.applyTaxes(taxes).taxedValue,
       quantity: this.quantity,
     }
   }
