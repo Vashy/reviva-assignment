@@ -27,6 +27,15 @@ describe('Acceptance Criteria', () => {
     const expectedOutput = await fixture('output-2.txt');
     expect(result).toStrictEqual(expectedOutput);
   });
+
+  it('Problem Input 3', async () => {
+    const jsonInput = await fixture('input-3.json');
+
+    const result = shoppingBasketFromJson(jsonInput).getReceiptDetailsAsString(new Taxes(new BasicSalesTax(), new ImportDutyTaxes())) + '\n';
+
+    const expectedOutput = await fixture('output-3.txt');
+    expect(result).toStrictEqual(expectedOutput);
+  });
 });
 
 describe('ShoppingBasket', () => {
