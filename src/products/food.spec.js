@@ -14,7 +14,7 @@ describe('food', () => {
   it('should have no basic sales taxes', () => {
     const food = new Food(new Money('10'));
 
-    const { total, salesTaxes } = food.applyTaxes(new BasicSalesTax());
+    const { total, salesTaxes } = food.applyTaxes(BasicSalesTax);
 
     expect(total).toStrictEqual(new Money('10'));
     expect(salesTaxes).toStrictEqual(Money.ZERO);

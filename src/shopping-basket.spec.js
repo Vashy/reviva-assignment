@@ -23,7 +23,7 @@ describe('shopping basket', () => {
     const list = [new Book(new Money('5')), new MusicCD(new Money('6')), new Book(new Money('7.5'))];
     const basket = new ShopppingBasket(list);
 
-    const { total, salesTaxes } = basket.applyTaxes(new BasicSalesTax());
+    const { total, salesTaxes } = basket.applyTaxes(BasicSalesTax);
 
     expect(total).toStrictEqual(new Money(5 + (6 * 1.1) + 7.5));
     expect(salesTaxes).toStrictEqual(new Money(6 * 0.1));

@@ -2,7 +2,7 @@ import { Book } from '../products/book.js';
 import { ShopppingBasket } from "../shopping-basket.js";
 import { MusicCD } from '../products/cd.js';
 import { Money } from '../money.js';
-import { BasicSalesTax, ImportDutyTaxes, Taxes } from './taxes.js';
+import { AllTaxes, BasicSalesTax, ImportDutyTax } from './taxes.js';
 import { GenericProduct } from '../products/generic-product.js';
 
 describe('basic sales taxes', () => {
@@ -10,7 +10,7 @@ describe('basic sales taxes', () => {
     it.each(['1', '2.5', '3'])('should be free (value = %s)', (value) => {
       const book = new Book(new Money(value));
 
-      const { total, salesTaxes } = book.applyTaxes(new BasicSalesTax());
+      const { total, salesTaxes } = book.applyTaxes(BasicSalesTax);
 
       expect(total).toStrictEqual(new Money(value));
       expect(salesTaxes).toStrictEqual(Money.ZERO);
@@ -19,7 +19,7 @@ describe('basic sales taxes', () => {
     it('should be free on multiple items', () => {
       const basket = new ShopppingBasket([new Book(new Money('12.49')), new Book(new Money('12.49'))]);
 
-      const { total, salesTaxes } = basket.applyTaxes(new BasicSalesTax());
+      const { total, salesTaxes } = basket.applyTaxes(BasicSalesTax);
 
       expect(total).toStrictEqual(new Money('24.98'));
       expect(salesTaxes).toStrictEqual(Money.ZERO);
@@ -35,7 +35,7 @@ describe('basic sales taxes', () => {
     ])('should be 10\%, (value = %s, expected = %s)', (money, expected) => {
       const cd = new MusicCD(new Money(money));
 
-      const { total, salesTaxes } = cd.applyTaxes(new BasicSalesTax());
+      const { total, salesTaxes } = cd.applyTaxes(BasicSalesTax);
 
       expect(total).toStrictEqual(new Money(expected));
       expect(salesTaxes).toStrictEqual(new Money(expected - money));
@@ -47,7 +47,7 @@ describe('basic sales taxes', () => {
         new MusicCD(new Money('12.49')),
       ]);
 
-      const { total, salesTaxes } = books.applyTaxes(new BasicSalesTax());
+      const { total, salesTaxes } = books.applyTaxes(BasicSalesTax);
       expect(total).toStrictEqual(new Money(14.99 * 1.1 + 12.49 * 1.1));
       expect(salesTaxes).toStrictEqual(new Money(14.99 * 0.1 + 12.49 * 0.1));
     });
@@ -63,7 +63,7 @@ describe('import duty taxes', () => {
     ])('should be 5\% with (value = %s, expected = %s)', (money, expected) => {
       const book = new Book(new Money(money), true);
 
-      const { total, salesTaxes } = book.applyTaxes(new ImportDutyTaxes());
+      const { total, salesTaxes } = book.applyTaxes(ImportDutyTax);
 
       expect(total).toStrictEqual(new Money(expected));
       expect(salesTaxes).toStrictEqual(new Money(expected - money));
@@ -75,7 +75,7 @@ describe('import duty taxes', () => {
         new Book(new Money('12.35'), true),
       ]);
 
-      const { total, salesTaxes } = books.applyTaxes(new ImportDutyTaxes());
+      const { total, salesTaxes } = books.applyTaxes(ImportDutyTax);
 
       const firstTaxed = new Money('12.1');
       const secondTaxed = new Money('13');
@@ -88,7 +88,7 @@ describe('import duty taxes', () => {
     it.each(['10', '10.5', '1', '1.05', '147', '154.35'])('should be free with (value = %s)', (money) => {
       const book = new Book(new Money(money), false);
 
-      const { total, salesTaxes } = book.applyTaxes(new ImportDutyTaxes());
+      const { total, salesTaxes } = book.applyTaxes(ImportDutyTax);
 
       expect(total).toStrictEqual(new Money(money));
       expect(salesTaxes).toStrictEqual(Money.ZERO);
@@ -100,7 +100,7 @@ describe('import duty taxes', () => {
         new Book(new Money('20.1'), false),
       ]);
 
-      const { total, salesTaxes } = books.applyTaxes(new ImportDutyTaxes());
+      const { total, salesTaxes } = books.applyTaxes(ImportDutyTax);
 
       const firstTaxed = new Money('12.55').multiply(new Money('1.05')).roundTo05();
       const secondTaxFree = new Money('20.1');
@@ -115,7 +115,7 @@ describe('import duty taxes and basic sales taxes together', () => {
     it('should have both taxes applied and round to .05', () => {
       const product = new GenericProduct(new Money('47.50'), true);
 
-      const { total, salesTaxes } = product.applyTaxes(new Taxes(new BasicSalesTax(), new ImportDutyTaxes()));
+      const { total, salesTaxes } = product.applyTaxes(AllTaxes);
 
       expect(total).toStrictEqual(new Money('54.65'));
       expect(salesTaxes).toStrictEqual(new Money(54.65 - 47.50));

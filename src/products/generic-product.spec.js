@@ -6,7 +6,7 @@ describe('generic product', () => {
   it('should have basic sales taxes at 10%', () => {
     const product = new GenericProduct(new Money('10'));
 
-    const { total, salesTaxes } = product.applyTaxes(new BasicSalesTax());
+    const { total, salesTaxes } = product.applyTaxes(BasicSalesTax);
 
     expect(total).toStrictEqual(new Money('11'));
     expect(salesTaxes).toStrictEqual(new Money('1'));
@@ -26,7 +26,7 @@ describe('generic product', () => {
   it('getDetails()', () => {
     const aProduct = new GenericProduct(new Money(20));
 
-    const { total, product, quantity } = aProduct.getDetails(new BasicSalesTax());
+    const { total, product, quantity } = aProduct.getDetails(BasicSalesTax);
 
     expect(total).toStrictEqual(new Money(22));
     expect(product).toStrictEqual(aProduct);

@@ -3,7 +3,7 @@ import { Money } from "../money.js";
 const importDutyTax = new Money(.05);
 const basicSalesTax = new Money(.10);
 
-export class BasicSalesTax {
+export const BasicSalesTax = {
   apply(product) {
     if (!['medical', 'food', 'books'].includes(product.productType)) {
       return calculateTaxes(product, basicSalesTax);
@@ -12,7 +12,7 @@ export class BasicSalesTax {
   }
 }
 
-export class ImportDutyTaxes {
+export const ImportDutyTax = {
   apply(product) {
     if (product.imported) {
       return calculateTaxes(product, importDutyTax);
@@ -37,6 +37,8 @@ export class Taxes {
     }
   }
 }
+
+export const AllTaxes = new Taxes(BasicSalesTax, ImportDutyTax);
 
 const freeTaxesFrom = (product) => ({
   total: product.money,

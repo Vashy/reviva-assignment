@@ -6,7 +6,7 @@ describe('medical product', () => {
   it('should have no basic sales taxes', () => {
     const product = new MedicalProduct(new Money('10'));
 
-    const { total, salesTaxes } = product.applyTaxes(new BasicSalesTax());
+    const { total, salesTaxes } = product.applyTaxes(BasicSalesTax);
 
     expect(total).toStrictEqual(new Money('10'));
     expect(salesTaxes).toStrictEqual(Money.ZERO);
@@ -26,7 +26,7 @@ describe('medical product', () => {
   it('getDetails()', () => {
     const aProduct = new MedicalProduct(new Money(20));
 
-    const { total, product, quantity } = aProduct.getDetails(new BasicSalesTax());
+    const { total, product, quantity } = aProduct.getDetails(BasicSalesTax);
 
     expect(total).toStrictEqual(new Money(20));
     expect(product).toStrictEqual(aProduct);

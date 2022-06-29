@@ -14,7 +14,7 @@ describe('book', () => {
   it.each(['3', '6', '17.1'])('should have no basic sales taxes, value %s', (value) => {
     const book = new Book(new Money(value));
 
-    const { total, salesTaxes } = book.applyTaxes(new BasicSalesTax());
+    const { total, salesTaxes } = book.applyTaxes(BasicSalesTax);
 
     expect(total).toStrictEqual(new Money(value));
     expect(salesTaxes).toStrictEqual(Money.ZERO);

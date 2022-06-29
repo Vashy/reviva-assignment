@@ -18,7 +18,7 @@ describe('music cd', () => {
     ])('should have no basic sales taxes, value %s', (value, expectedValue) => {
       const cd = new MusicCD(new Money(value));
   
-      const { total, salesTaxes } = cd.applyTaxes(new BasicSalesTax());
+      const { total, salesTaxes } = cd.applyTaxes(BasicSalesTax);
   
       expect(total).toStrictEqual(new Money(expectedValue));
       expect(salesTaxes).toStrictEqual(new Money(expectedValue - value));

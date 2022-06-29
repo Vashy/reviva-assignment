@@ -5,7 +5,7 @@ import { GenericProduct } from "../products/generic-product.js";
 import { Money } from "../money.js";
 import { Multiple } from "../products/multiple-product.js";
 import { ShopppingBasket } from "../shopping-basket.js";
-import { BasicSalesTax, ImportDutyTaxes, Taxes } from "../taxes/taxes.js";
+import { AllTaxes, BasicSalesTax } from "../taxes/taxes.js";
 import { shoppingBasketFromJson } from "../products/product-factory.js";
 import { fixture } from "./fixture.js";
 
@@ -13,7 +13,7 @@ describe('Acceptance Criteria', () => {
   it('Problem Input 1', async () => {
     const jsonInput = await fixture('input-1.json');
 
-    const result = shoppingBasketFromJson(jsonInput).getReceiptDetailsAsString(new BasicSalesTax()) + '\n';
+    const result = shoppingBasketFromJson(jsonInput).getReceiptDetailsAsString(BasicSalesTax) + '\n';
 
     const expectedOutput = await fixture('output-1.txt');
     expect(result).toStrictEqual(expectedOutput);
@@ -22,7 +22,7 @@ describe('Acceptance Criteria', () => {
   it('Problem Input 2', async () => {
     const jsonInput = await fixture('input-2.json');
 
-    const result = shoppingBasketFromJson(jsonInput).getReceiptDetailsAsString(new Taxes(new BasicSalesTax(), new ImportDutyTaxes())) + '\n';
+    const result = shoppingBasketFromJson(jsonInput).getReceiptDetailsAsString(AllTaxes) + '\n';
 
     const expectedOutput = await fixture('output-2.txt');
     expect(result).toStrictEqual(expectedOutput);
@@ -31,7 +31,7 @@ describe('Acceptance Criteria', () => {
   it('Problem Input 3', async () => {
     const jsonInput = await fixture('input-3.json');
 
-    const result = shoppingBasketFromJson(jsonInput).getReceiptDetailsAsString(new Taxes(new BasicSalesTax(), new ImportDutyTaxes())) + '\n';
+    const result = shoppingBasketFromJson(jsonInput).getReceiptDetailsAsString(AllTaxes) + '\n';
 
     const expectedOutput = await fixture('output-3.txt');
     expect(result).toStrictEqual(expectedOutput);
@@ -46,7 +46,7 @@ describe('ShoppingBasket', () => {
       new Food(new Money('0.85')),
     ]);
 
-    const { salesTaxes, total, products } = basket.getReceiptDetails(new BasicSalesTax());
+    const { salesTaxes, total, products } = basket.getReceiptDetails(BasicSalesTax);
 
     expect(salesTaxes).toStrictEqual(new Money('1.50'));
     expect(total).toStrictEqual(new Money('42.32'));
@@ -61,7 +61,7 @@ describe('ShoppingBasket', () => {
       new GenericProduct(new Money('47.50'), true),
     ]);
 
-    const { salesTaxes, total, products } = basket.getReceiptDetails(new Taxes(new BasicSalesTax(), new ImportDutyTaxes()));
+    const { salesTaxes, total, products } = basket.getReceiptDetails(AllTaxes);
 
     expect(salesTaxes).toStrictEqual(new Money('7.65'));
     expect(total).toStrictEqual(new Money('65.15'));
@@ -77,7 +77,7 @@ describe('ShoppingBasket', () => {
       new Multiple(new Food(new Money('11.25'), true), 3), // chocolate
     ]);
 
-    const { salesTaxes, total, products } = basket.getReceiptDetails(new Taxes(new BasicSalesTax(), new ImportDutyTaxes()));
+    const { salesTaxes, total, products } = basket.getReceiptDetails(AllTaxes);
 
     expect(salesTaxes).toStrictEqual(new Money('7.90'));
     expect(total).toStrictEqual(new Money('98.38'));
