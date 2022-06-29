@@ -8,8 +8,8 @@ describe('generic product', () => {
 
     const { total, salesTaxes } = product.applyTaxes(new BasicSalesTax());
 
-    expect(total).toEqual(new Money('11'));
-    expect(salesTaxes).toEqual(new Money('1'));
+    expect(total).toStrictEqual(new Money('11'));
+    expect(salesTaxes).toStrictEqual(new Money('1'));
   });
 
   it('should fail when value is not Money', () => {
@@ -20,7 +20,7 @@ describe('generic product', () => {
   it('productType should be "generic"', () => {
     const product = new GenericProduct(new Money(0));
 
-    expect(product.productType).toEqual('generic');
+    expect(product.productType).toStrictEqual('generic');
   });
 
   it('getDetails()', () => {
@@ -28,14 +28,14 @@ describe('generic product', () => {
 
     const { total, product, quantity } = aProduct.getDetails(new BasicSalesTax());
 
-    expect(total).toEqual(new Money(22));
-    expect(product).toEqual(aProduct);
-    expect(quantity).toEqual(1);
+    expect(total).toStrictEqual(new Money(22));
+    expect(product).toStrictEqual(aProduct);
+    expect(quantity).toStrictEqual(1);
   });
 
   it.each([true, false])('imported should be %s', (imported) => {
     const product = new GenericProduct(new Money(0), imported);
 
-    expect(product.imported).toEqual(imported);
+    expect(product.imported).toStrictEqual(imported);
   });
 });

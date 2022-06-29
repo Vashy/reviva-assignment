@@ -11,7 +11,7 @@ describe('money', () => {
 
     const result = moneyA.add(moneyB);
 
-    expect(result).toEqual(new Money(expected));
+    expect(result).toStrictEqual(new Money(expected));
   });
 
   describe('rounding', () => {
@@ -26,7 +26,7 @@ describe('money', () => {
 
       const result = money.roundTo05();
 
-      expect(result).toEqual(new Money(rounded));
+      expect(result).toStrictEqual(new Money(rounded));
     });
   });
 });

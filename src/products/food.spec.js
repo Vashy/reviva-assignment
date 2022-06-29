@@ -8,7 +8,7 @@ describe('food', () => {
 
     const result = food.money;
 
-    expect(result).toEqual(new Money('15'));
+    expect(result).toStrictEqual(new Money('15'));
   });
 
   it('should have no basic sales taxes', () => {
@@ -16,8 +16,8 @@ describe('food', () => {
 
     const { total, salesTaxes } = food.applyTaxes(new BasicSalesTax());
 
-    expect(total).toEqual(new Money('10'));
-    expect(salesTaxes).toEqual(Money.ZERO);
+    expect(total).toStrictEqual(new Money('10'));
+    expect(salesTaxes).toStrictEqual(Money.ZERO);
   });
 
   it('should fail when value is not Money', () => {
@@ -28,12 +28,12 @@ describe('food', () => {
   it('productType should be "food"', () => {
     const food = new Food(new Money(0));
 
-    expect(food.productType).toEqual('food');
+    expect(food.productType).toStrictEqual('food');
   });
 
   it.each([true, false])('imported should be %s', (imported) => {
     const food = new Food(new Money(0), imported);
 
-    expect(food.imported).toEqual(imported);
+    expect(food.imported).toStrictEqual(imported);
   });
 });

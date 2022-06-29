@@ -11,8 +11,8 @@ describe('multiple product', () => {
 
       const { total, salesTaxes } = products.applyTaxes(new BasicSalesTax());
 
-      expect(total).toEqual(new Money(30));
-      expect(salesTaxes).toEqual(Money.ZERO);
+      expect(total).toStrictEqual(new Money(30));
+      expect(salesTaxes).toStrictEqual(Money.ZERO);
     });
 
     it('should have import duty taxes at 5%', () => {
@@ -20,8 +20,8 @@ describe('multiple product', () => {
 
       const { total, salesTaxes } = products.applyTaxes(new ImportDutyTaxes());
 
-      expect(total).toEqual(new Money(21));
-      expect(salesTaxes).toEqual(new Money(1));
+      expect(total).toStrictEqual(new Money(21));
+      expect(salesTaxes).toStrictEqual(new Money(1));
     });
   });
 
@@ -31,8 +31,8 @@ describe('multiple product', () => {
 
       const { total, salesTaxes } = products.applyTaxes(new BasicSalesTax());
 
-      expect(total).toEqual(new Money(22));
-      expect(salesTaxes).toEqual(new Money(2));
+      expect(total).toStrictEqual(new Money(22));
+      expect(salesTaxes).toStrictEqual(new Money(2));
     });
   });
 });

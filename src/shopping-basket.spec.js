@@ -25,7 +25,7 @@ describe('shopping basket', () => {
 
     const { total, salesTaxes } = basket.applyTaxes(new BasicSalesTax());
 
-    expect(total).toEqual(new Money(5 + (6 * 1.1) + 7.5));
-    expect(salesTaxes).toEqual(new Money(6 * 0.1));
+    expect(total).toStrictEqual(new Money(5 + (6 * 1.1) + 7.5));
+    expect(salesTaxes).toStrictEqual(new Money(6 * 0.1));
   });
 });

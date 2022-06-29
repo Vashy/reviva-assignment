@@ -12,8 +12,8 @@ describe('basic sales taxes', () => {
 
       const { total, salesTaxes } = book.applyTaxes(new BasicSalesTax());
 
-      expect(total).toEqual(new Money(value));
-      expect(salesTaxes).toEqual(Money.ZERO);
+      expect(total).toStrictEqual(new Money(value));
+      expect(salesTaxes).toStrictEqual(Money.ZERO);
     });
 
     it('should be free on multiple items', () => {
@@ -21,8 +21,8 @@ describe('basic sales taxes', () => {
 
       const { total, salesTaxes } = basket.applyTaxes(new BasicSalesTax());
 
-      expect(total).toEqual(new Money('24.98'));
-      expect(salesTaxes).toEqual(Money.ZERO);
+      expect(total).toStrictEqual(new Money('24.98'));
+      expect(salesTaxes).toStrictEqual(Money.ZERO);
     });
   });
 
@@ -37,8 +37,8 @@ describe('basic sales taxes', () => {
 
       const { total, salesTaxes } = cd.applyTaxes(new BasicSalesTax());
 
-      expect(total).toEqual(new Money(expected));
-      expect(salesTaxes).toEqual(new Money(expected - money));
+      expect(total).toStrictEqual(new Money(expected));
+      expect(salesTaxes).toStrictEqual(new Money(expected - money));
     });
 
     it('should sum all taxed music CDs (10\%)', () => {
@@ -48,8 +48,8 @@ describe('basic sales taxes', () => {
       ]);
 
       const { total, salesTaxes } = books.applyTaxes(new BasicSalesTax());
-      expect(total).toEqual(new Money(14.99 * 1.1 + 12.49 * 1.1));
-      expect(salesTaxes).toEqual(new Money(14.99 * 0.1 + 12.49 * 0.1));
+      expect(total).toStrictEqual(new Money(14.99 * 1.1 + 12.49 * 1.1));
+      expect(salesTaxes).toStrictEqual(new Money(14.99 * 0.1 + 12.49 * 0.1));
     });
   });
 });
@@ -65,8 +65,8 @@ describe('import duty taxes', () => {
 
       const { total, salesTaxes } = book.applyTaxes(new ImportDutyTaxes());
 
-      expect(total).toEqual(new Money(expected));
-      expect(salesTaxes).toEqual(new Money(expected - money));
+      expect(total).toStrictEqual(new Money(expected));
+      expect(salesTaxes).toStrictEqual(new Money(expected - money));
     });
 
     it('should sum all taxed books (5\%)', () => {
@@ -79,8 +79,8 @@ describe('import duty taxes', () => {
 
       const firstTaxed = new Money('12.1');
       const secondTaxed = new Money('13');
-      expect(total).toEqual(firstTaxed.add(secondTaxed));
-      expect(salesTaxes).toEqual(new Money(1.25));
+      expect(total).toStrictEqual(firstTaxed.add(secondTaxed));
+      expect(salesTaxes).toStrictEqual(new Money(1.25));
     });
   });
 
@@ -90,8 +90,8 @@ describe('import duty taxes', () => {
 
       const { total, salesTaxes } = book.applyTaxes(new ImportDutyTaxes());
 
-      expect(total).toEqual(new Money(money));
-      expect(salesTaxes).toEqual(Money.ZERO);
+      expect(total).toStrictEqual(new Money(money));
+      expect(salesTaxes).toStrictEqual(Money.ZERO);
     });
 
     it('should sum all books applying import duty taxes only on imported books', () => {
@@ -104,8 +104,8 @@ describe('import duty taxes', () => {
 
       const firstTaxed = new Money('12.55').multiply(new Money('1.05')).roundTo05();
       const secondTaxFree = new Money('20.1');
-      expect(total).toEqual(firstTaxed.add(secondTaxFree));
-      expect(salesTaxes).toEqual(firstTaxed.subtract(new Money('12.55')));
+      expect(total).toStrictEqual(firstTaxed.add(secondTaxFree));
+      expect(salesTaxes).toStrictEqual(firstTaxed.subtract(new Money('12.55')));
     });
   });
 });
@@ -117,8 +117,8 @@ describe('import duty taxes and basic sales taxes together', () => {
 
       const { total, salesTaxes } = product.applyTaxes(new Taxes(new BasicSalesTax(), new ImportDutyTaxes()));
 
-      expect(total).toEqual(new Money('54.65'));
-      expect(salesTaxes).toEqual(new Money(54.65 - 47.50));
+      expect(total).toStrictEqual(new Money('54.65'));
+      expect(salesTaxes).toStrictEqual(new Money(54.65 - 47.50));
     });
   });
 });

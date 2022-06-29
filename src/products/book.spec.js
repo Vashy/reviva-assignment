@@ -8,7 +8,7 @@ describe('book', () => {
 
     const result = book.money;
 
-    expect(result).toEqual(new Money(value));
+    expect(result).toStrictEqual(new Money(value));
   });
 
   it.each(['3', '6', '17.1'])('should have no basic sales taxes, value %s', (value) => {
@@ -16,8 +16,8 @@ describe('book', () => {
 
     const { total, salesTaxes } = book.applyTaxes(new BasicSalesTax());
 
-    expect(total).toEqual(new Money(value));
-    expect(salesTaxes).toEqual(Money.ZERO);
+    expect(total).toStrictEqual(new Money(value));
+    expect(salesTaxes).toStrictEqual(Money.ZERO);
   });
 
   it('should fail when value is not Money', () => {
@@ -28,12 +28,12 @@ describe('book', () => {
   it('productType should be "books"', () => {
     const book = new Book(new Money(0));
 
-    expect(book.productType).toEqual('books');
+    expect(book.productType).toStrictEqual('books');
   });
 
   it.each([true, false])('imported should be %s', (imported) => {
     const book = new Book(new Money(0), imported);
 
-    expect(book.imported).toEqual(imported);
+    expect(book.imported).toStrictEqual(imported);
   });
 });

@@ -8,7 +8,7 @@ describe('music cd', () => {
   
       const result = cd.money;
   
-      expect(result).toEqual(new Money(value));
+      expect(result).toStrictEqual(new Money(value));
     });
   
     it.each([
@@ -20,8 +20,8 @@ describe('music cd', () => {
   
       const { total, salesTaxes } = cd.applyTaxes(new BasicSalesTax());
   
-      expect(total).toEqual(new Money(expectedValue));
-      expect(salesTaxes).toEqual(new Money(expectedValue - value));
+      expect(total).toStrictEqual(new Money(expectedValue));
+      expect(salesTaxes).toStrictEqual(new Money(expectedValue - value));
     });
   
     it('should fail when value is not Money', () => {
@@ -33,12 +33,12 @@ describe('music cd', () => {
     it('productType should be "music"', () => {
       const book = new MusicCD(new Money(0));
   
-      expect(book.productType).toEqual('music');
+      expect(book.productType).toStrictEqual('music');
     });
   
     it.each([true, false])('imported should be %s', (imported) => {
       const book = new MusicCD(new Money(0), imported);
   
-      expect(book.imported).toEqual(imported);
+      expect(book.imported).toStrictEqual(imported);
     });
   });

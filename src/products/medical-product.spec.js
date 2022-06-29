@@ -8,8 +8,8 @@ describe('medical product', () => {
 
     const { total, salesTaxes } = product.applyTaxes(new BasicSalesTax());
 
-    expect(total).toEqual(new Money('10'));
-    expect(salesTaxes).toEqual(Money.ZERO);
+    expect(total).toStrictEqual(new Money('10'));
+    expect(salesTaxes).toStrictEqual(Money.ZERO);
   });
 
   it('should fail when value is not Money', () => {
@@ -20,7 +20,7 @@ describe('medical product', () => {
   it('productType should be "medical"', () => {
     const product = new MedicalProduct(new Money(0));
 
-    expect(product.productType).toEqual('medical');
+    expect(product.productType).toStrictEqual('medical');
   });
 
   it('getDetails()', () => {
@@ -28,14 +28,14 @@ describe('medical product', () => {
 
     const { total, product, quantity } = aProduct.getDetails(new BasicSalesTax());
 
-    expect(total).toEqual(new Money(20));
-    expect(product).toEqual(aProduct);
-    expect(quantity).toEqual(1);
+    expect(total).toStrictEqual(new Money(20));
+    expect(product).toStrictEqual(aProduct);
+    expect(quantity).toStrictEqual(1);
   });
 
   it.each([true, false])('imported should be %s', (imported) => {
     const product = new MedicalProduct(new Money(0), imported);
 
-    expect(product.imported).toEqual(imported);
+    expect(product.imported).toStrictEqual(imported);
   });
 });
