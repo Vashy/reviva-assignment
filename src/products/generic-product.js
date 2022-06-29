@@ -4,8 +4,7 @@ export class GenericProduct extends Product {
   productType = 'generic';
 
   constructor(money, imported, description) {
-    super(money, imported);
-    this.description = description;
+    super(money, imported, description);
   }
 
   getDetails(taxes) {

@@ -6,8 +6,30 @@ import { Money } from "../money.js";
 import { Multiple } from "../products/multiple-product.js";
 import { ShopppingBasket } from "../shopping-basket.js";
 import { BasicSalesTax, ImportDutyTaxes, Taxes } from "../taxes/taxes.js";
+import { shoppingBasketFromJson } from "../products/product-factory.js";
+import { fixture } from "./fixture.js";
 
-describe('basic sales taxes', () => {
+describe('Acceptance Criteria', () => {
+  it('Problem Input 1', async () => {
+    const jsonInput = await fixture('input-1.json');
+
+    const result = shoppingBasketFromJson(jsonInput).getReceiptDetailsAsString(new BasicSalesTax()) + '\n';
+
+    const expectedOutput = await fixture('output-1.txt');
+    expect(result).toStrictEqual(expectedOutput);
+  });
+
+  it('Problem Input 2', async () => {
+    const jsonInput = await fixture('input-1.json');
+
+    const result = shoppingBasketFromJson(jsonInput).getReceiptDetailsAsString(new BasicSalesTax()) + '\n';
+
+    const expectedOutput = await fixture('output-1.txt');
+    expect(result).toStrictEqual(expectedOutput);
+  });
+});
+
+describe('ShoppingBasket', () => {
   it('Problem Input 1', () => {
     const basket = new ShopppingBasket([
       new Multiple(new Book(new Money('12.49')), 2),

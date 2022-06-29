@@ -3,8 +3,8 @@ import { Product } from "./product.js";
 export class Book extends Product {
   productType = 'books';
 
-  constructor(money, imported) {
-    super(money, imported);
+  constructor(money, imported, description) {
+    super(money, imported, description);
   }
 
   getDetails(taxes) {

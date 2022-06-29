@@ -4,8 +4,7 @@ export class MedicalProduct extends Product {
   productType = 'medical';
 
   constructor(money, imported, description) {
-    super(money, imported);
-    this.description = description;
+    super(money, imported, description);
   }
 
   getDetails(taxes) {

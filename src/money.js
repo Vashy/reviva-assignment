@@ -22,4 +22,8 @@ export class Money {
   roundTo05() {
     return new Money((Math.ceil(this.value.value * 20) / 20).toFixed(2));
   }
+
+  toString() {
+    return this.value.format({ separator: '', decimal: '.', precision: 2, symbol: '' });
+  }
 }

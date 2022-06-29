@@ -22,4 +22,16 @@ export class ShopppingBasket {
 
     return { total, salesTaxes, products };
   }
+
+  getReceiptDetailsAsString(taxes) {
+    const { total, products, salesTaxes } = this.getReceiptDetails(taxes);
+    const lines = products.map(details => detailsToString(details));
+    lines.push('Sales Taxes: ' + salesTaxes.toString());
+    lines.push('Total: ' + total.toString());
+    return lines.join('\n');
+  }
+}
+
+function detailsToString(details) {
+  return `${details.quantity} ${details.product.description}: ${details.total}`;
 }
