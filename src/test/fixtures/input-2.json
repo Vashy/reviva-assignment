@@ -1,0 +1,16 @@
+[
+  {
+    "productType": "food",
+    "cost": "10.00",
+    "quantity": "1",
+    "description": "box of chocolates",
+    "imported": true
+  },
+  {
+    "productType": "generic",
+    "cost": "47.50",
+    "quantity": "1",
+    "description": "bottle of perfume",
+    "imported": true
+  }
+]

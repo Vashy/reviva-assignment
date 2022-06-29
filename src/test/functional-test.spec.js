@@ -20,11 +20,11 @@ describe('Acceptance Criteria', () => {
   });
 
   it('Problem Input 2', async () => {
-    const jsonInput = await fixture('input-1.json');
+    const jsonInput = await fixture('input-2.json');
 
-    const result = shoppingBasketFromJson(jsonInput).getReceiptDetailsAsString(new BasicSalesTax()) + '\n';
+    const result = shoppingBasketFromJson(jsonInput).getReceiptDetailsAsString(new Taxes(new BasicSalesTax(), new ImportDutyTaxes())) + '\n';
 
-    const expectedOutput = await fixture('output-1.txt');
+    const expectedOutput = await fixture('output-2.txt');
     expect(result).toStrictEqual(expectedOutput);
   });
 });

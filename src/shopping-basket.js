@@ -1,4 +1,3 @@
-
 export class ShopppingBasket {
   constructor(productList) {
     if (!Array.isArray(productList)) {
@@ -33,5 +32,8 @@ export class ShopppingBasket {
 }
 
 function detailsToString(details) {
-  return `${details.quantity} ${details.product.description}: ${details.total}`;
+  return `${details.quantity} ` +
+    `${details.product.imported ? 'imported ' : ''}` +
+    `${details.product.description}: ` +
+    `${details.total}`;
 }
