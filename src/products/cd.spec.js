@@ -1,6 +1,6 @@
-import { MusicCD } from "./cd";
-import { Money } from "./money";
-import { BasicSalesTax } from "./taxes";
+import { MusicCD } from "./cd.js";
+import { Money } from "../money.js";
+import { BasicSalesTax } from "../taxes.js";
 
 describe('music cd', () => {
     it.each(['5', '6.5', '17.45'])('should have value %s', (value) => {
@@ -18,10 +18,10 @@ describe('music cd', () => {
     ])('should have no basic sales taxes, value %s', (value, expectedValue) => {
       const cd = new MusicCD(new Money(value));
   
-      const { taxedValue, appliedTaxes } = cd.applyTaxes(new BasicSalesTax());
+      const { total, salesTaxes } = cd.applyTaxes(new BasicSalesTax());
   
-      expect(taxedValue).toEqual(new Money(expectedValue));
-      expect(appliedTaxes).toEqual(new Money(expectedValue - value));
+      expect(total).toEqual(new Money(expectedValue));
+      expect(salesTaxes).toEqual(new Money(expectedValue - value));
     });
   
     it('should fail when value is not Money', () => {
@@ -42,4 +42,3 @@ describe('music cd', () => {
       expect(book.imported).toEqual(imported);
     });
   });
-  

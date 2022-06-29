@@ -1,4 +1,4 @@
-import { Product } from "./product";
+import { Product } from "./product.js";
 
 export class GenericProduct extends Product {
   productType = 'generic';
@@ -9,10 +9,10 @@ export class GenericProduct extends Product {
   }
 
   getDetails(taxes) {
-    const { taxedValue } = taxes.apply(this);
+    const { total } = taxes.apply(this);
     return {
       product: this,
-      total: taxedValue,
+      total,
       quantity: 1,
     }
   }

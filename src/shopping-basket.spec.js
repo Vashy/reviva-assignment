@@ -1,8 +1,8 @@
-import { Book } from "./book";
+import { Book } from "./products/book.js";
 import { ShopppingBasket } from "./shopping-basket";
 import { Money } from "./money";
 import { BasicSalesTax } from "./taxes";
-import { MusicCD } from "./cd";
+import { MusicCD } from "./products/cd.js";
 
 describe('shopping basket', () => {
   it('should have correct productList type', () => {
@@ -23,9 +23,9 @@ describe('shopping basket', () => {
     const list = [new Book(new Money('5')), new MusicCD(new Money('6')), new Book(new Money('7.5'))];
     const basket = new ShopppingBasket(list);
 
-    const { taxedValue, appliedTaxes } = basket.applyTaxes(new BasicSalesTax());
+    const { total, salesTaxes } = basket.applyTaxes(new BasicSalesTax());
 
-    expect(taxedValue).toEqual(new Money(5 + (6 * 1.1) + 7.5));
-    expect(appliedTaxes).toEqual(new Money(6 * 0.1));
+    expect(total).toEqual(new Money(5 + (6 * 1.1) + 7.5));
+    expect(salesTaxes).toEqual(new Money(6 * 0.1));
   });
 });

@@ -11,19 +11,15 @@ export class ShopppingBasket {
     return this.productList
       .map(item => item.applyTaxes(taxes))
       .reduce((acc, current) => ({
-        taxedValue: acc.taxedValue.add(current.taxedValue),
-        appliedTaxes: acc.appliedTaxes.add(current.appliedTaxes),
+        total: acc.total.add(current.total),
+        salesTaxes: acc.salesTaxes.add(current.salesTaxes),
       }));
   }
 
   getReceiptDetails(taxes) {
-    const { taxedValue, appliedTaxes } = this.applyTaxes(taxes);
+    const { total, salesTaxes } = this.applyTaxes(taxes);
     const products = this.productList.map(product => product.getDetails(taxes));
 
-    return {
-      total: taxedValue,
-      salesTaxes: appliedTaxes,
-      products,
-    }
+    return { total, salesTaxes, products };
   }
 }

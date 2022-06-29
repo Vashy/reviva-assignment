@@ -1,11 +1,11 @@
-import { Book } from "./book";
-import { MusicCD } from "./cd";
-import { Food } from "./food";
-import { GenericProduct } from "./generic-product";
-import { Money } from "./money";
-import { Multiple } from "./multiple-product";
-import { ShopppingBasket } from "./shopping-basket";
-import { BasicSalesTax, ImportDutyTaxes, Taxes } from "./taxes";
+import { Book } from "../products/book.js";
+import { MusicCD } from "../products/cd.js";
+import { Food } from "../products/food.js";
+import { GenericProduct } from "../products/generic-product.js";
+import { Money } from "../money.js";
+import { Multiple } from "../products/multiple-product.js";
+import { ShopppingBasket } from "../shopping-basket.js";
+import { BasicSalesTax, ImportDutyTaxes, Taxes } from "../taxes.js";
 
 describe('basic sales taxes', () => {
   it('Problem Input 1', () => {

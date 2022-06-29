@@ -27,26 +27,26 @@ export class Taxes {
   }
 
   apply(product) {
-    const appliedTaxes = this.taxes
+    const salesTaxes = this.taxes
       .map(tax => tax.apply(product))
-      .reduce((acc, step) => (acc.appliedTaxes.add(step.appliedTaxes)));
+      .reduce((acc, step) => (acc.salesTaxes.add(step.salesTaxes)));
 
     return {
-      taxedValue: product.money.add(appliedTaxes),
-      appliedTaxes,
+      total: product.money.add(salesTaxes),
+      salesTaxes,
     }
   }
 }
 
 const freeTaxesFrom = (product) => ({
-  taxedValue: product.money,
-  appliedTaxes: Money.ZERO,
+  total: product.money,
+  salesTaxes: Money.ZERO,
 });
 
 function calculateTaxes(product, taxCharge) {
-  const taxedValue = product.money.add(product.money.multiply(taxCharge).roundTo05());
+  const total = product.money.add(product.money.multiply(taxCharge).roundTo05());
   return {
-    taxedValue,
-    appliedTaxes: taxedValue.subtract(product.money),
+    total,
+    salesTaxes: total.subtract(product.money),
   };
 }

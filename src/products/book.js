@@ -1,4 +1,4 @@
-import { Product } from "./product";
+import { Product } from "./product.js";
 
 export class Book extends Product {
   productType = 'books';
@@ -8,10 +8,10 @@ export class Book extends Product {
   }
 
   getDetails(taxes) {
-    const { taxedValue } = taxes.apply(this);
+    const { total } = taxes.apply(this);
     return {
       product: this,
-      total: taxedValue,
+      total,
       quantity: 1,
     }
   }

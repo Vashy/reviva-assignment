@@ -1,6 +1,6 @@
-import { Book } from "./book";
-import { Money } from "./money";
-import { BasicSalesTax } from "./taxes";
+import { Book } from "./book.js";
+import { Money } from "../money.js";
+import { BasicSalesTax } from "../taxes.js";
 
 describe('book', () => {
   it.each(['5', '6.5', '17.45'])('should have value %s', (value) => {
@@ -14,10 +14,10 @@ describe('book', () => {
   it.each(['3', '6', '17.1'])('should have no basic sales taxes, value %s', (value) => {
     const book = new Book(new Money(value));
 
-    const { taxedValue, appliedTaxes } = book.applyTaxes(new BasicSalesTax());
+    const { total, salesTaxes } = book.applyTaxes(new BasicSalesTax());
 
-    expect(taxedValue).toEqual(new Money(value));
-    expect(appliedTaxes).toEqual(Money.ZERO);
+    expect(total).toEqual(new Money(value));
+    expect(salesTaxes).toEqual(Money.ZERO);
   });
 
   it('should fail when value is not Money', () => {

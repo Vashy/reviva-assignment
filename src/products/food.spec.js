@@ -1,6 +1,6 @@
-import { Food } from "./food";
-import { Money } from "./money";
-import { BasicSalesTax } from "./taxes";
+import { Food } from "./food.js";
+import { Money } from "../money.js";
+import { BasicSalesTax } from "../taxes.js";
 
 describe('food', () => {
   it('should have correct value', () => {
@@ -14,10 +14,10 @@ describe('food', () => {
   it('should have no basic sales taxes', () => {
     const food = new Food(new Money('10'));
 
-    const { taxedValue, appliedTaxes } = food.applyTaxes(new BasicSalesTax());
+    const { total, salesTaxes } = food.applyTaxes(new BasicSalesTax());
 
-    expect(taxedValue).toEqual(new Money('10'));
-    expect(appliedTaxes).toEqual(Money.ZERO);
+    expect(total).toEqual(new Money('10'));
+    expect(salesTaxes).toEqual(Money.ZERO);
   });
 
   it('should fail when value is not Money', () => {

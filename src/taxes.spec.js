@@ -1,28 +1,28 @@
-import { Book } from './book';
+import { Book } from './products/book.js';
 import { ShopppingBasket } from "./shopping-basket";
-import { MusicCD } from './cd';
+import { MusicCD } from './products/cd.js';
 import { Money } from './money';
 import { BasicSalesTax, ImportDutyTaxes, Taxes } from './taxes';
-import { GenericProduct } from './generic-product';
+import { GenericProduct } from './products/generic-product.js';
 
 describe('basic sales taxes', () => {
   describe('on books', () => {
     it.each(['1', '2.5', '3'])('should be free, value = %s', (value) => {
       const book = new Book(new Money(value));
 
-      const { taxedValue, appliedTaxes } = book.applyTaxes(new BasicSalesTax());
+      const { total, salesTaxes } = book.applyTaxes(new BasicSalesTax());
 
-      expect(taxedValue).toEqual(new Money(value));
-      expect(appliedTaxes).toEqual(Money.ZERO);
+      expect(total).toEqual(new Money(value));
+      expect(salesTaxes).toEqual(Money.ZERO);
     });
 
     it('should be free on multiple items', () => {
       const basket = new ShopppingBasket([new Book(new Money('12.49')), new Book(new Money('12.49'))]);
 
-      const { taxedValue, appliedTaxes } = basket.applyTaxes(new BasicSalesTax());
+      const { total, salesTaxes } = basket.applyTaxes(new BasicSalesTax());
 
-      expect(taxedValue).toEqual(new Money('24.98'));
-      expect(appliedTaxes).toEqual(Money.ZERO);
+      expect(total).toEqual(new Money('24.98'));
+      expect(salesTaxes).toEqual(Money.ZERO);
     });
   });
 
@@ -35,10 +35,10 @@ describe('basic sales taxes', () => {
     ])('should be 10\%, (value = %s, expected = %s)', (money, expected) => {
       const cd = new MusicCD(new Money(money));
 
-      const { taxedValue, appliedTaxes } = cd.applyTaxes(new BasicSalesTax());
+      const { total, salesTaxes } = cd.applyTaxes(new BasicSalesTax());
 
-      expect(taxedValue).toEqual(new Money(expected));
-      expect(appliedTaxes).toEqual(new Money(expected - money));
+      expect(total).toEqual(new Money(expected));
+      expect(salesTaxes).toEqual(new Money(expected - money));
     });
 
     it('should sum all taxed music CDs (10\%)', () => {
@@ -47,9 +47,9 @@ describe('basic sales taxes', () => {
         new MusicCD(new Money('12.49')),
       ]);
 
-      const { taxedValue, appliedTaxes } = books.applyTaxes(new BasicSalesTax());
-      expect(taxedValue).toEqual(new Money(14.99 * 1.1 + 12.49 * 1.1));
-      expect(appliedTaxes).toEqual(new Money(14.99 * 0.1 + 12.49 * 0.1));
+      const { total, salesTaxes } = books.applyTaxes(new BasicSalesTax());
+      expect(total).toEqual(new Money(14.99 * 1.1 + 12.49 * 1.1));
+      expect(salesTaxes).toEqual(new Money(14.99 * 0.1 + 12.49 * 0.1));
     });
   });
 });
@@ -63,10 +63,10 @@ describe('import duty taxes', () => {
     ])('should be 5\% with (value = %s, expected = %s)', (money, expected) => {
       const book = new Book(new Money(money), true);
 
-      const { taxedValue, appliedTaxes } = book.applyTaxes(new ImportDutyTaxes());
+      const { total, salesTaxes } = book.applyTaxes(new ImportDutyTaxes());
 
-      expect(taxedValue).toEqual(new Money(expected));
-      expect(appliedTaxes).toEqual(new Money(expected - money));
+      expect(total).toEqual(new Money(expected));
+      expect(salesTaxes).toEqual(new Money(expected - money));
     });
 
     it('should sum all taxed books (5\%)', () => {
@@ -75,12 +75,12 @@ describe('import duty taxes', () => {
         new Book(new Money('12.35'), true),
       ]);
 
-      const { taxedValue, appliedTaxes } = books.applyTaxes(new ImportDutyTaxes());
+      const { total, salesTaxes } = books.applyTaxes(new ImportDutyTaxes());
 
       const firstTaxed = new Money('12.1');
       const secondTaxed = new Money('13');
-      expect(taxedValue).toEqual(firstTaxed.add(secondTaxed));
-      expect(appliedTaxes).toEqual(new Money(1.25));
+      expect(total).toEqual(firstTaxed.add(secondTaxed));
+      expect(salesTaxes).toEqual(new Money(1.25));
     });
   });
 
@@ -88,10 +88,10 @@ describe('import duty taxes', () => {
     it.each(['10', '10.5', '1', '1.05', '147', '154.35'])('should be free with (value = %s)', (money) => {
       const book = new Book(new Money(money), false);
 
-      const { taxedValue, appliedTaxes } = book.applyTaxes(new ImportDutyTaxes());
+      const { total, salesTaxes } = book.applyTaxes(new ImportDutyTaxes());
 
-      expect(taxedValue).toEqual(new Money(money));
-      expect(appliedTaxes).toEqual(Money.ZERO);
+      expect(total).toEqual(new Money(money));
+      expect(salesTaxes).toEqual(Money.ZERO);
     });
 
     it('should sum all books applying import duty taxes only on imported books', () => {
@@ -100,12 +100,12 @@ describe('import duty taxes', () => {
         new Book(new Money('20.1'), false),
       ]);
 
-      const { taxedValue, appliedTaxes } = books.applyTaxes(new ImportDutyTaxes());
+      const { total, salesTaxes } = books.applyTaxes(new ImportDutyTaxes());
 
       const firstTaxed = new Money('12.55').multiply(new Money('1.05')).roundTo05();
       const secondTaxFree = new Money('20.1');
-      expect(taxedValue).toEqual(firstTaxed.add(secondTaxFree));
-      expect(appliedTaxes).toEqual(firstTaxed.subtract(new Money('12.55')));
+      expect(total).toEqual(firstTaxed.add(secondTaxFree));
+      expect(salesTaxes).toEqual(firstTaxed.subtract(new Money('12.55')));
     });
   });
 });
@@ -115,10 +115,10 @@ describe('import duty taxes and basic sales taxes together', () => {
     it('should have both taxes applied and round to .05', () => {
       const product = new GenericProduct(new Money('47.50'), true);
 
-      const { taxedValue, appliedTaxes } = product.applyTaxes(new Taxes(new BasicSalesTax(), new ImportDutyTaxes()));
+      const { total, salesTaxes } = product.applyTaxes(new Taxes(new BasicSalesTax(), new ImportDutyTaxes()));
 
-      expect(taxedValue).toEqual(new Money('54.65'));
-      expect(appliedTaxes).toEqual(new Money(54.65 - 47.50));
+      expect(total).toEqual(new Money('54.65'));
+      expect(salesTaxes).toEqual(new Money(54.65 - 47.50));
     });
   });
 });
