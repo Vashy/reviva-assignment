@@ -1,7 +1,7 @@
 import { Book } from "./products/book.js";
 import { ShopppingBasket } from "./shopping-basket";
 import { Money } from "./money";
-import { BasicSalesTax } from "./taxes";
+import { BasicSalesTax } from "./taxes/taxes.js";
 import { MusicCD } from "./products/cd.js";
 
 describe('shopping basket', () => {

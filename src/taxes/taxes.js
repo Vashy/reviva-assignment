@@ -1,11 +1,11 @@
-import { Money } from "./money";
+import { Money } from "../money.js";
 
 const importDutyTax = new Money(.05);
 const basicSalesTax = new Money(.10);
 
 export class BasicSalesTax {
   apply(product) {
-    if (['music', 'generic'].includes(product.productType)) {
+    if (!['medical', 'food', 'books'].includes(product.productType)) {
       return calculateTaxes(product, basicSalesTax);
     }
     return freeTaxesFrom(product);

@@ -1,6 +1,6 @@
 import { Food } from "./food.js";
 import { Money } from "../money.js";
-import { BasicSalesTax } from "../taxes.js";
+import { BasicSalesTax } from "../taxes/taxes.js";
 
 describe('food', () => {
   it('should have correct value', () => {

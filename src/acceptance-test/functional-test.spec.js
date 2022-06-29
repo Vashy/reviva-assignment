@@ -5,7 +5,7 @@ import { GenericProduct } from "../products/generic-product.js";
 import { Money } from "../money.js";
 import { Multiple } from "../products/multiple-product.js";
 import { ShopppingBasket } from "../shopping-basket.js";
-import { BasicSalesTax, ImportDutyTaxes, Taxes } from "../taxes.js";
+import { BasicSalesTax, ImportDutyTaxes, Taxes } from "../taxes/taxes.js";
 
 describe('basic sales taxes', () => {
   it('Problem Input 1', () => {

@@ -20,7 +20,6 @@ export class Money {
   }
 
   roundTo05() {
-    // return new Money(currency(currency(this.value, { increment: .05 }).format()));
     return new Money((Math.ceil(this.value.value * 20) / 20).toFixed(2));
   }
 }

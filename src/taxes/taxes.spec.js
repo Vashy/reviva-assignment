@@ -1,9 +1,9 @@
-import { Book } from './products/book.js';
-import { ShopppingBasket } from "./shopping-basket";
-import { MusicCD } from './products/cd.js';
-import { Money } from './money';
-import { BasicSalesTax, ImportDutyTaxes, Taxes } from './taxes';
-import { GenericProduct } from './products/generic-product.js';
+import { Book } from '../products/book.js';
+import { ShopppingBasket } from "../shopping-basket.js";
+import { MusicCD } from '../products/cd.js';
+import { Money } from '../money.js';
+import { BasicSalesTax, ImportDutyTaxes, Taxes } from './taxes.js';
+import { GenericProduct } from '../products/generic-product.js';
 
 describe('basic sales taxes', () => {
   describe('on books', () => {

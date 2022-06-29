@@ -1,6 +1,6 @@
 import { Book } from "./book.js";
 import { Money } from "../money.js";
-import { BasicSalesTax } from "../taxes.js";
+import { BasicSalesTax } from "../taxes/taxes.js";
 
 describe('book', () => {
   it.each(['5', '6.5', '17.45'])('should have value %s', (value) => {
