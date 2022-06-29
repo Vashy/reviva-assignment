@@ -7,7 +7,7 @@ import { GenericProduct } from '../products/generic-product.js';
 
 describe('basic sales taxes', () => {
   describe('on books', () => {
-    it.each(['1', '2.5', '3'])('should be free, value = %s', (value) => {
+    it.each(['1', '2.5', '3'])('should be free (value = %s)', (value) => {
       const book = new Book(new Money(value));
 
       const { total, salesTaxes } = book.applyTaxes(new BasicSalesTax());

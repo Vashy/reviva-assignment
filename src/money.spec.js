@@ -13,4 +13,20 @@ describe('money', () => {
 
     expect(result).toEqual(new Money(expected));
   });
+
+  describe('rounding', () => {
+    it.each([
+      ['15.343', '15.35'],
+      ['750.1311', '750.15'],
+      ['1.17', '1.20'],
+      ['10.10', '10.10'],
+      ['10', '10'],
+    ])('%s should be rounded to %s', (value, rounded) => {
+      const money = new Money(value);
+
+      const result = money.roundTo05();
+
+      expect(result).toEqual(new Money(rounded));
+    });
+  });
 });
