@@ -1,7 +1,8 @@
-import { Money } from "../money.js";
+import { Money } from "../money/money.js";
+import { GENERIC } from "./product.types.js";
 
 export class Product {
-  productType = 'generic';
+  productType = GENERIC;
 
   constructor(money, imported = false, description = '') {
     if (!(money instanceof Money)) {

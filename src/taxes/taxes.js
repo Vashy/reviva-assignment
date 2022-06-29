@@ -1,11 +1,12 @@
-import { Money } from "../money.js";
+import { Money } from "../money/money.js";
+import { BOOKS, FOOD, MEDICAL } from "../products/product.types.js";
 
-const importDutyTax = new Money(.05);
-const basicSalesTax = new Money(.10);
+const importDutyTax = .05;
+const basicSalesTax = .10;
 
 export const BasicSalesTax = {
   apply(product) {
-    if (!['medical', 'food', 'books'].includes(product.productType)) {
+    if (![MEDICAL, FOOD, BOOKS].includes(product.productType)) {
       return calculateTaxes(product, basicSalesTax);
     }
     return freeTaxesFrom(product);

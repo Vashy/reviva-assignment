@@ -11,8 +11,8 @@ export class Money {
     return new Money(this.value.add(otherMoney.value));
   }
 
-  multiply(otherMoney) {
-    return new Money(this.value.multiply(otherMoney.value));
+  multiply(value) {
+    return new Money(this.value.multiply(value));
   }
 
   subtract(otherMoney) {

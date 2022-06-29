@@ -1,8 +1,8 @@
-import { Book } from "./products/book.js";
-import { ShopppingBasket } from "./shopping-basket";
-import { Money } from "./money";
-import { BasicSalesTax } from "./taxes/taxes.js";
-import { MusicCD } from "./products/cd.js";
+import { Book } from "../products/book.js";
+import { ShopppingBasket } from "./shopping-basket.js";
+import { Money } from "../money/money.js";
+import { BasicSalesTax } from "../taxes/taxes.js";
+import { MusicCD } from "../products/music-cd.js";
 
 describe('shopping basket', () => {
   it('should have correct productList type', () => {
@@ -21,9 +21,9 @@ describe('shopping basket', () => {
 
   it('should tax sum of products', () => {
     const list = [new Book(new Money('5')), new MusicCD(new Money('6')), new Book(new Money('7.5'))];
-    const basket = new ShopppingBasket(list);
+    const basket = new ShopppingBasket(list, BasicSalesTax);
 
-    const { total, salesTaxes } = basket.applyTaxes(BasicSalesTax);
+    const { total, salesTaxes } = basket.applyTaxes();
 
     expect(total).toStrictEqual(new Money(5 + (6 * 1.1) + 7.5));
     expect(salesTaxes).toStrictEqual(new Money(6 * 0.1));

@@ -1,29 +1,31 @@
 import { Book } from "./book.js";
 import { Food } from "./food.js";
-import { MusicCD } from "./cd.js";
+import { MusicCD } from "./music-cd.js";
 import { GenericProduct } from "./generic-product.js";
 import { Multiple } from "./multiple-product.js";
-import { Money } from "../money.js";
-import { ShopppingBasket } from "../shopping-basket";
+import { Money } from "../money/money.js";
+import { ShopppingBasket } from "../basket/shopping-basket.js";
 import { MedicalProduct } from "./medical-product.js";
+import { BOOKS, FOOD, GENERIC, MEDICAL, MUSIC } from "./product.types.js";
 
-function shoppingBasketFromJson(jsonInput) {
+function shoppingBasketFromJson(jsonInput, taxes) {
   const products = JSON.parse(jsonInput);
-  return new ShopppingBasket(products.map(product => productFrom(product)));
+  const productList = products.map(product => productFrom(product));
+  return new ShopppingBasket(productList, taxes);
 }
 
 function productFrom({ productType, cost, imported, quantity, description }) {
   const money = new Money(cost);
   let product;
-  if (productType === 'books') {
+  if (productType === BOOKS) {
     product = new Book(money, imported, description);
-  } else if (productType === 'food') {
+  } else if (productType === FOOD) {
     product = new Food(money, imported, description);
-  } else if (productType === 'music') {
+  } else if (productType === MUSIC) {
     product = new MusicCD(money, imported, description);
-  } else if (productType === 'medical') {
+  } else if (productType === MEDICAL) {
     product = new MedicalProduct(money, imported, description);
-  } else if (productType === 'generic') {
+  } else if (productType === GENERIC) {
     product = new GenericProduct(money, imported, description);
   } else {
     throw new Error(`type ${productType} not valid`);

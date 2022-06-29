@@ -1,6 +1,7 @@
-import { MusicCD } from "./cd.js";
-import { Money } from "../money.js";
+import { MusicCD } from "./music-cd.js";
+import { Money } from "../money/money.js";
 import { BasicSalesTax } from "../taxes/taxes.js";
+import { MUSIC } from "./product.types.js";
 
 describe('music cd', () => {
     it.each(['5', '6.5', '17.45'])('should have value %s', (value) => {
@@ -33,7 +34,7 @@ describe('music cd', () => {
     it('productType should be "music"', () => {
       const book = new MusicCD(new Money(0));
   
-      expect(book.productType).toStrictEqual('music');
+      expect(book.productType).toStrictEqual(MUSIC);
     });
   
     it.each([true, false])('imported should be %s', (imported) => {

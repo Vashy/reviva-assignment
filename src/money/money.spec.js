@@ -1,4 +1,4 @@
-import { Money } from "./money";
+import { Money } from "./money.js";
 
 describe('money', () => {
   it.each([

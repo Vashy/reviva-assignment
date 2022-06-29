@@ -1,4 +1,3 @@
-import { Money } from "../money.js";
 import { Product } from "./product.js";
 
 export class Multiple extends Product {
@@ -13,8 +12,8 @@ export class Multiple extends Product {
     const { total, salesTaxes } = taxes.apply(this);
 
     return {
-      total: total.multiply(new Money(this.quantity)),
-      salesTaxes: salesTaxes.multiply(new Money(this.quantity)),
+      total: total.multiply(this.quantity),
+      salesTaxes: salesTaxes.multiply(this.quantity),
     }
   }
 

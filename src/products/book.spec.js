@@ -1,6 +1,7 @@
 import { Book } from "./book.js";
-import { Money } from "../money.js";
+import { Money } from "../money/money.js";
 import { BasicSalesTax } from "../taxes/taxes.js";
+import { BOOKS } from "./product.types.js";
 
 describe('book', () => {
   it.each(['5', '6.5', '17.45'])('should have value %s', (value) => {
@@ -28,7 +29,7 @@ describe('book', () => {
   it('productType should be "books"', () => {
     const book = new Book(new Money(0));
 
-    expect(book.productType).toStrictEqual('books');
+    expect(book.productType).toStrictEqual(BOOKS);
   });
 
   it.each([true, false])('imported should be %s', (imported) => {

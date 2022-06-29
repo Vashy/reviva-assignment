@@ -1,6 +1,6 @@
 import { Multiple } from "./multiple-product.js";
 import { MedicalProduct } from "./medical-product.js";
-import { Money } from "../money.js";
+import { Money } from "../money/money.js";
 import { BasicSalesTax, ImportDutyTax } from "../taxes/taxes.js";
 import { GenericProduct } from "./generic-product.js";
 

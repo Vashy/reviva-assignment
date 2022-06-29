@@ -2,28 +2,28 @@
   {
     "productType": "generic",
     "cost": "27.99",
-    "quantity": "1",
+    "quantity": 1,
     "description": "bottle of perfume",
     "imported": true
   },
   {
     "productType": "generic",
     "cost": "18.99",
-    "quantity": "1",
+    "quantity": 1,
     "description": "bottle of perfume",
     "imported": false
   },
   {
     "productType": "medical",
     "cost": "9.75",
-    "quantity": "1",
+    "quantity": 1,
     "description": "packet of headache pills",
     "imported": false
   },
   {
     "productType": "food",
     "cost": "11.25",
-    "quantity": "3",
+    "quantity": 3,
     "description": "box of chocolates",
     "imported": true
   }

@@ -1,6 +1,7 @@
-import { Money } from "../money.js";
+import { Money } from "../money/money.js";
 import { BasicSalesTax } from "../taxes/taxes.js";
 import { MedicalProduct } from "./medical-product.js";
+import { MEDICAL } from "./product.types.js";
 
 describe('medical product', () => {
   it('should have no basic sales taxes', () => {
@@ -20,7 +21,7 @@ describe('medical product', () => {
   it('productType should be "medical"', () => {
     const product = new MedicalProduct(new Money(0));
 
-    expect(product.productType).toStrictEqual('medical');
+    expect(product.productType).toStrictEqual(MEDICAL);
   });
 
   it('getDetails()', () => {

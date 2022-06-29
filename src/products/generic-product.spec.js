@@ -1,6 +1,7 @@
-import { Money } from "../money.js";
+import { Money } from "../money/money.js";
 import { BasicSalesTax } from "../taxes/taxes.js";
 import { GenericProduct } from "./generic-product.js";
+import { GENERIC } from "./product.types.js";
 
 describe('generic product', () => {
   it('should have basic sales taxes at 10%', () => {
@@ -20,7 +21,7 @@ describe('generic product', () => {
   it('productType should be "generic"', () => {
     const product = new GenericProduct(new Money(0));
 
-    expect(product.productType).toStrictEqual('generic');
+    expect(product.productType).toStrictEqual(GENERIC);
   });
 
   it('getDetails()', () => {

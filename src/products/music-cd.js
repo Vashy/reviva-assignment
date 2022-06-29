@@ -1,7 +1,8 @@
 import { Product } from "./product.js";
+import { MUSIC } from "./product.types.js";
 
 export class MusicCD extends Product {
-  productType = 'music';
+  productType = MUSIC;
 
   constructor(money, imported, description) {
     super(money, imported, description);

@@ -1,7 +1,8 @@
 import { Product } from "./product.js";
+import { GENERIC } from "./product.types.js";
 
 export class GenericProduct extends Product {
-  productType = 'generic';
+  productType = GENERIC;
 
   constructor(money, imported, description) {
     super(money, imported, description);
